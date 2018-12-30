@@ -37,6 +37,9 @@ Route::group(['namespace' => 'Api'], function () {
 
         # user routes
         Route::group(['prefix' => 'user'], function () {
+
+            Route::get('/', ['as' => 'api.user.show', 'uses' => 'UserController@show']);
+
             # user's factors
             Route::get('/factor', ['as' => 'api.user.factor.index', 'uses' => 'FactorController@index']);
             # user's specific factor

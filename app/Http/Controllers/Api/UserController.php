@@ -11,4 +11,11 @@ class UserController extends Controller
 {
     public $paginate = 15;
 
+
+    public function show()
+    {
+        $user = auth()->user();
+
+        $user->load(['factor']);
+    }
 }
