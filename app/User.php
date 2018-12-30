@@ -56,6 +56,11 @@ class User extends Authenticatable
         return $qeury->where('role', '!=', 'admin');
     }
 
+    public function scopeIsSellerUser($qeury)
+    {
+        return $qeury->where('role', 'seller');
+    }
+
     # relations
     public function factors()
     {

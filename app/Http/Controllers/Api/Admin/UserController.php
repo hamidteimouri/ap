@@ -50,7 +50,6 @@ class UserController extends Controller
                 'lng' => 'required|max:190',
             ]);
             if ($validate->fails()) {
-                // return response()->json(['error' => "Unprocessable Entity"], 422);
                 return response()->json(['error' => $validate->errors()], 422);
             }
             $input = request()->all();
@@ -72,5 +71,53 @@ class UserController extends Controller
             dd('Error: ' . $exception->getMessage(), ' | file: ' . $exception->getFile() . ' | line: ' . $exception->getLine());
         }
 
+    }
+
+    # get all seller
+    public function seller()
+    {
+        try {
+            $objects = User::isSellerUser()->latest()->paginate($this->paginate);
+            return UserResource::collection($objects);
+        } catch (Exception $exception) {
+            dd('Error: ' . $exception->getMessage(), ' | file: ' . $exception->getFile() . ' | line: ' . $exception->getLine());
+        }
+    }
+
+    public function createStoreForSeller(User $user)
+    {
+
+        try {
+            if ($user->isSeller()) {
+                $validate = validator(request()->all(), [
+                    'title' => 'required|max:190',
+                    'lat' => 'required|max:190',
+                    'lng' => 'required|max:190',
+                    'radius' => 'required|max:190',
+                ]);
+                if ($validate->fails()) {
+                    return response()->json(['error' => $validate->errors()], 422);
+                }
+                if (!$user->store()->exists()) {
+                    $input = request()->all();
+                    $store = $user->store()->create([
+                        'title' => $input['title'],
+                        'lat' => $input['lat'],
+                        'lng' => $input['lng'],
+                        'radius' => $input['radius'],
+                    ]);
+
+                    return response()->json([
+                        'store successfully created'
+                    ]);
+                } else {
+                    return response()->json([
+                        'this user already has a store'
+                    ], 404);
+                }
+            }
+        } catch (Exception $exception) {
+            dd('Error: ' . $exception->getMessage(), ' | file: ' . $exception->getFile() . ' | line: ' . $exception->getLine());
+        }
     }
 }
