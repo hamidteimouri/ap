@@ -50,7 +50,7 @@ class UserController extends Controller
                 'role' => 'required|in:user,seller',
                 'lat' => 'required|max:190',
                 'lng' => 'required|max:190',
-                'radius' => 'nullable|max:190',
+                'radius' => 'required|max:190',
             ]);
             if ($validate->fails()) {
                 return response()->json(['error' => $validate->errors()], 422);
@@ -65,8 +65,7 @@ class UserController extends Controller
             $object->password = $input['password'];   # Hashed by model
             $object->lat = $input['lat'];
             $object->lng = $input['lng'];
-            if (request()->has('radius'))
-                $object->radius = $input['radius'];
+            $object->radius = $input['radius'];
             $object->save();
 
             return new UserResource($object);
