@@ -61,4 +61,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Factor::class);
     }
+
+    public function store()
+    {
+        return $this->hasOne(Store::class);
+    }
 }

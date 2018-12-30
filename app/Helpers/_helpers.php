@@ -1,7 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: hamidteimouri
- * Date: 12/30/2018
- * Time: 03:03 PM
- */
+function removeSpecialChar($string, $urlGenerator = false)
+{
+    $notAllowed = ['  ', ' ', '!', '@', '#', '$', '%', '&', '*', '(', ')', '+', ';', ':', "'", '"', '/', '\\', '?', '|', '؟', '،', ',', '-', '--'];
+    $string = stripslashes($string);
+    $string = trim($string);
+    $s = '';
+    if ($urlGenerator) {
+        $s = '-';
+    }
+    $string = str_replace($notAllowed, $s, $string);
+    return $string;
+}

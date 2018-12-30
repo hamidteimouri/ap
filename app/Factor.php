@@ -12,7 +12,7 @@ class Factor extends Model
         $this->code = $this->setCode();
     }
 
-    # code for users
+    # factor code for users
     public function setCode()
     {
         $code = rand(100000, 900000);

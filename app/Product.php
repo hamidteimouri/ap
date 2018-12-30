@@ -14,7 +14,7 @@ class Product extends Model
     # mutator
     public function setPriceAttribute($value)
     {
-        $this->attributes['price'] = strtolower($value);
+        $this->attributes['price'] = removeSpecialChar($value);
     }
 
     # accessor
@@ -23,5 +23,11 @@ class Product extends Model
         $price = 0;
         if ($this->price) $price = $this->price;
         return number_format($price);
+    }
+
+    # relations
+    public function store()
+    {
+        return $this->belongsTo(Store::class)->withDefault();
     }
 }

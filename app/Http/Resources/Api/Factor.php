@@ -4,7 +4,7 @@ namespace App\Http\Resources\Api;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class Product extends JsonResource
+class Factor extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,15 +16,17 @@ class Product extends JsonResource
     {
         #return parent::toArray($request);
         return [
-            'title' => $this->title,
-            'price' => $this->priceNumberFormat,
+            'id' => $this->id,
+            'price' => $this->price,
+            'code' => $this->code,
+            'status' => $this->status,
         ];
     }
 
     public function with($request)
     {
         return [
-            'store' => $this->store
+            'orders' => $this->orders,
         ];
     }
 }
