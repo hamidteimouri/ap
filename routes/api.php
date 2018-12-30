@@ -38,9 +38,16 @@ Route::group(['namespace' => 'Api'], function () {
         # user routes
         Route::group(['prefix' => 'user'], function () {
             # user's factors
-            Route::get('/factor', ['as' => 'api.user.factor', 'uses' => 'UserController@factors']);
+            Route::get('/factor', ['as' => 'api.user.factor.index', 'uses' => 'FactorController@index']);
             # user's specific factor
-            Route::get('/factor/{factor}', ['as' => 'api.user.showFactor', 'uses' => 'UserController@showFactor']);
+            Route::post('/factor', ['as' => 'front.factor.store', 'uses' => 'FactorController@store']);
+            Route::get('/factor/{factor}', ['as' => 'api.user.factor.show', 'uses' => 'FactorController@show']);
+
+            # user's cart
+            Route::get('/cart', ['as' => 'api.cart.index', 'uses' => 'CartController@index']);
+            Route::post('/cart/{product}', ['as' => 'api.cart.store', 'uses' => 'CartController@store']);
+
+
         });
 
         # get all products

@@ -15,8 +15,29 @@ class ProductController extends Controller
     public function index()
     {
         try {
+            $user = auth()->user();
+            $lat = $user->lat;
+            $lon = $user->lng;
+            $radius = $user->radius;
             $objects = Product::latest()->paginate($this->paginate);
             return $objects = ProductResource::collection($objects);
+
+            /*
+            $res = Product::select(
+                \DB::raw("*,
+                              ( 6371 * acos( cos( radians(?) ) *
+                                 cos( radians( lat ) )
+                                 * cos( radians( lon ) - radians(?)
+                                 ) + sin( radians(?) ) *
+                                 sin( radians( lat ) ) )
+                               ) AS distance"))
+                ->having("distance", "<", "?")
+                ->orderBy("distance")
+                ->setBindings([$lat, $lon, $lat, $radius])
+                ->get();
+
+            */
+
 
         } catch (Exception $exception) {
             dd('Error: ' . $exception->getMessage(), ' | file: ' . $exception->getFile() . ' | line: ' . $exception->getLine());

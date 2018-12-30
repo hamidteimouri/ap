@@ -14,7 +14,7 @@ class UserController extends Controller
 
     public function __construct()
     {
-//        $this->middlewareCheckPermission();/
+        $this->middlewareCheckPermission();
     }
 
     # this is for check user is a seller or not
@@ -39,6 +39,7 @@ class UserController extends Controller
         }
     }
 
+    # create a new user or seller
     public function store()
     {
         try {
@@ -46,8 +47,10 @@ class UserController extends Controller
                 'name' => 'required|max:190',
                 'email' => 'required|unique:users|email|max:190',
                 'password' => 'required|min:6|max:190',
+                'role' => 'required|in:user,seller',
                 'lat' => 'required|max:190',
                 'lng' => 'required|max:190',
+                'radius' => 'nullable|max:190',
             ]);
             if ($validate->fails()) {
                 return response()->json(['error' => $validate->errors()], 422);
@@ -62,6 +65,8 @@ class UserController extends Controller
             $object->password = $input['password'];   # Hashed by model
             $object->lat = $input['lat'];
             $object->lng = $input['lng'];
+            if (request()->has('radius'))
+                $object->radius = $input['radius'];
             $object->save();
 
             return new UserResource($object);

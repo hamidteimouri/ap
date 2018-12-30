@@ -4,21 +4,18 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFactorsTable extends Migration
+class CreateCartsTable extends Migration
 {
     /**
      * Run the migrations.
-     *L
+     *
      * @return void
      */
     public function up()
     {
-        Schema::create('factors', function (Blueprint $table) {
+        Schema::create('carts', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('code')->unique();
             $table->unsignedInteger('user_id');
-            $table->float('price')->nullable();
-            $table->enum('status', ['pending', 'paid', 'canceled']);
             $table->timestamps();
         });
     }
@@ -30,6 +27,6 @@ class CreateFactorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('factors');
+        Schema::dropIfExists('carts');
     }
 }

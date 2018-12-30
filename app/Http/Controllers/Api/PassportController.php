@@ -15,7 +15,6 @@ class PassportController extends Controller
     {
 
         try {
-            0;
             $validate = validator(request()->all(), [
                 'email' => 'required|email|max:190',
                 'password' => 'required|min:6|max:190',
