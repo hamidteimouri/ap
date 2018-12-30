@@ -42,7 +42,6 @@ Route::group(['namespace' => 'Api'], function () {
 
             # user's factors
             Route::get('/factor', ['as' => 'api.user.factor.index', 'uses' => 'FactorController@index']);
-            # user's specific factor
             Route::post('/factor', ['as' => 'front.factor.store', 'uses' => 'FactorController@store']);
             Route::get('/factor/{factor}', ['as' => 'api.user.factor.show', 'uses' => 'FactorController@show']);
 
