@@ -16,6 +16,8 @@ class UserController extends Controller
     {
         $user = auth()->user();
 
-        $user->load(['factor']);
+        $user->load(['factors']);
+
+        return $user;
     }
 }
