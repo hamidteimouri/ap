@@ -22,8 +22,10 @@ class CreateUsersTable extends Migration
             $table->string('api_token')->nullable();
             $table->string('password');
 
+            # Geo
             $table->string('lat')->nullable();
             $table->string('lng')->nullable();
+            $table->string('radius')->nullable();
 
             $table->rememberToken();
             $table->timestamps();

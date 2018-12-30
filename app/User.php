@@ -33,4 +33,32 @@ class User extends Authenticatable
     {
         return $this->role == 'seller';
     }
+
+    public function isAdmin()
+    {
+        return $this->role == 'admin';
+    }
+
+    # mutator(s)
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
+    }
+
+    public function setEmailAttribute($value)
+    {
+        $this->attributes['email'] = strtolower($value);
+    }
+
+    # scopes
+    public function scopeIsNotAdmin($qeury)
+    {
+        return $qeury->where('role', '!=', 'admin');
+    }
+
+    # relations
+    public function factors()
+    {
+        return $this->hasMany(Factor::class);
+    }
 }

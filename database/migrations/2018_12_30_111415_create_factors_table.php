@@ -4,21 +4,21 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProductsTable extends Migration
+class CreateFactorsTable extends Migration
 {
     /**
      * Run the migrations.
-     *
+     *L
      * @return void
      */
     public function up()
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('factors', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('user_id');   # this is seller'id actually
-            $table->string('title');
+            $table->string('code')->unique();
+            $table->unsignedInteger('user_id');
             $table->float('price');
-            $table->softDeletes();
+            $table->enum('status', ['pending', 'paid', 'canceled']);
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateProductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('factors');
     }
 }

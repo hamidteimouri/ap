@@ -11,6 +11,13 @@ class Product extends Model
     protected $table = 'products';                       # it is not necessary
 
 
+    # mutator
+    public function setPriceAttribute($value)
+    {
+        $this->attributes['price'] = strtolower($value);
+    }
+
+    # accessor
     public function getPriceNumberFormatAttribute()
     {
         $price = 0;
